@@ -1,0 +1,30 @@
+
+// clang++ -I/usr/include/freetype2 -I/usr/include/opencv2 -lm -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_ml -lopencv_legacy -lopencv_flann   -lfreetype main.cpp config.cpp FT.cpp letter.cpp
+
+#include "core/core.hpp"
+#include "highgui/highgui.hpp"
+
+#include <iostream>
+#include <string>
+
+
+class Letter {
+
+ public:
+  Letter(char letterChar, int* rawArray, int height, int y_top, int y_bottom,
+	 int width, int l_sb, int r_sb);
+  ~Letter();
+  char getLetterChar() {return this->letterChar;}
+
+ private:
+  char letterChar;
+
+  // dimensions:
+  int height;       // from bottom to top of glyph
+  int y_top;        // y-coordinate of top of glyph, from baseline
+  int y_bottom;     // y-coordinate of bottom of glyph, from baseline
+  int width;        // between left to right extreme vertices
+  int l_sb;         // left sidebearing
+  int r_sb;         // right sidebearing
+
+};
