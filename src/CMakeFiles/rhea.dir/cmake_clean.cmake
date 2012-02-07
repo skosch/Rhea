@@ -3,6 +3,7 @@ FILE(REMOVE_RECURSE
   "CMakeFiles/rhea.dir/letter.cpp.o"
   "CMakeFiles/rhea.dir/config.cpp.o"
   "CMakeFiles/rhea.dir/FT.cpp.o"
+  "CMakeFiles/rhea.dir/pair.cpp.o"
   "../bin/rhea.pdb"
   "../bin/rhea"
 )

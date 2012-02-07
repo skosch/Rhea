@@ -24,6 +24,7 @@ class FTengine {
 
   int prepareFT(string fontPath, int ppem);
   Letter* getLetter(char letterChar);
+  int getKerning(char letterChar1, char letterChar2);
 
  private:
   FT_Library library;

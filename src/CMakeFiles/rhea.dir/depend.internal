@@ -8,6 +8,8 @@ src/CMakeFiles/rhea.dir/FT.cpp.o
  /usr/include/freetype2/freetype/ftbitmap.h
  /usr/include/opencv2/core/core.hpp
  /usr/include/opencv2/highgui/highgui.hpp
+ /usr/include/opencv2/imgproc/imgproc.hpp
+ /usr/include/opencv2/objdetect/objdetect.hpp
 src/CMakeFiles/rhea.dir/config.cpp.o
  /home/sebastian/autokern/rhea/src/config.cpp
  /home/sebastian/autokern/rhea/src/config.h
@@ -16,12 +18,27 @@ src/CMakeFiles/rhea.dir/letter.cpp.o
  /home/sebastian/autokern/rhea/src/letter.h
  /usr/include/opencv2/core/core.hpp
  /usr/include/opencv2/highgui/highgui.hpp
+ /usr/include/opencv2/imgproc/imgproc.hpp
+ /usr/include/opencv2/objdetect/objdetect.hpp
 src/CMakeFiles/rhea.dir/main.cpp.o
  /home/sebastian/autokern/rhea/src/FT.h
  /home/sebastian/autokern/rhea/src/config.h
  /home/sebastian/autokern/rhea/src/letter.h
  /home/sebastian/autokern/rhea/src/main.cpp
+ /home/sebastian/autokern/rhea/src/pair.h
  /home/sebastian/autokern/rhea/src/rhea_config.h
  /usr/include/freetype2/freetype/ftbitmap.h
  /usr/include/opencv2/core/core.hpp
  /usr/include/opencv2/highgui/highgui.hpp
+ /usr/include/opencv2/imgproc/imgproc.hpp
+ /usr/include/opencv2/objdetect/objdetect.hpp
+src/CMakeFiles/rhea.dir/pair.cpp.o
+ /home/sebastian/autokern/rhea/src/FT.h
+ /home/sebastian/autokern/rhea/src/letter.h
+ /home/sebastian/autokern/rhea/src/pair.cpp
+ /home/sebastian/autokern/rhea/src/pair.h
+ /usr/include/freetype2/freetype/ftbitmap.h
+ /usr/include/opencv2/core/core.hpp
+ /usr/include/opencv2/highgui/highgui.hpp
+ /usr/include/opencv2/imgproc/imgproc.hpp
+ /usr/include/opencv2/objdetect/objdetect.hpp

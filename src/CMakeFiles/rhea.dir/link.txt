@@ -1,1 +1,1 @@
-/usr/bin/clang++   -Wall    CMakeFiles/rhea.dir/main.cpp.o CMakeFiles/rhea.dir/letter.cpp.o CMakeFiles/rhea.dir/config.cpp.o CMakeFiles/rhea.dir/FT.cpp.o  -o ../bin/rhea -rdynamic -lfreetype -lm -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_ml 
+/usr/bin/clang++   -Wall    CMakeFiles/rhea.dir/main.cpp.o CMakeFiles/rhea.dir/letter.cpp.o CMakeFiles/rhea.dir/config.cpp.o CMakeFiles/rhea.dir/FT.cpp.o CMakeFiles/rhea.dir/pair.cpp.o  -o ../bin/rhea -rdynamic -lfreetype -lm -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_ml -lopencv_features2d -lopencv_objdetect 

@@ -1,23 +1,39 @@
 
-// clang++ -I/usr/include/freetype2 -I/usr/include/opencv2 -lm -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_ml -lopencv_legacy -lopencv_flann   -lfreetype main.cpp config.cpp FT.cpp letter.cpp
+#ifndef LETTER_H
+#define LETTER_H
 
 #include "core/core.hpp"
 #include "highgui/highgui.hpp"
+#include "imgproc/imgproc.hpp"
+#include "objdetect/objdetect.hpp"
 
 #include <iostream>
 #include <string>
-
+#include <vector>
 
 class Letter {
 
  public:
-  Letter(char letterChar, int* rawArray, int height, int y_top, int y_bottom,
-	 int width, int l_sb, int r_sb);
+  Letter(char letterChar, cv::Mat* rawArray, int height, int y_top,
+	 int y_bottom, int width, int l_sb, int r_sb);
   ~Letter();
   char getLetterChar() {return this->letterChar;}
+  int getHeight() {return this->height;}
+  int getYtop() {return this->y_top;}
+  int getYbottom() {return this->y_bottom;}
+  int getWidth() {return this->width;}
+  int getLSB() {return this->l_sb;}
+  int getRSB() {return this->r_sb;}
+
+  void printLetterInfo();
+  void analyze();
+
+  void f_houghTransform();
+  void f_moments();
 
  private:
   char letterChar;
+  cv::Mat* lMat;
 
   // dimensions:
   int height;       // from bottom to top of glyph
@@ -28,3 +44,5 @@ class Letter {
   int r_sb;         // right sidebearing
 
 };
+
+#endif

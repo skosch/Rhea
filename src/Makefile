@@ -205,6 +205,30 @@ main.cpp.s:
 	cd /home/sebastian/autokern/rhea && $(MAKE) -f src/CMakeFiles/rhea.dir/build.make src/CMakeFiles/rhea.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+pair.o: pair.cpp.o
+.PHONY : pair.o
+
+# target to build an object file
+pair.cpp.o:
+	cd /home/sebastian/autokern/rhea && $(MAKE) -f src/CMakeFiles/rhea.dir/build.make src/CMakeFiles/rhea.dir/pair.cpp.o
+.PHONY : pair.cpp.o
+
+pair.i: pair.cpp.i
+.PHONY : pair.i
+
+# target to preprocess a source file
+pair.cpp.i:
+	cd /home/sebastian/autokern/rhea && $(MAKE) -f src/CMakeFiles/rhea.dir/build.make src/CMakeFiles/rhea.dir/pair.cpp.i
+.PHONY : pair.cpp.i
+
+pair.s: pair.cpp.s
+.PHONY : pair.s
+
+# target to generate assembly for a file
+pair.cpp.s:
+	cd /home/sebastian/autokern/rhea && $(MAKE) -f src/CMakeFiles/rhea.dir/build.make src/CMakeFiles/rhea.dir/pair.cpp.s
+.PHONY : pair.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -226,6 +250,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... pair.o"
+	@echo "... pair.i"
+	@echo "... pair.s"
 .PHONY : help
 
 

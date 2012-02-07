@@ -27,9 +27,6 @@ int FTengine::prepareFT(string fontPath, int ppem) {
 }
 
 Letter* FTengine::getLetter(char letterChar) {
-  //  Letter* nL = new Letter();
-
-  // load the letter into FreeType
 
   FT_UInt glyph_index = FT_Get_Char_Index(face, (FT_ULong) letterChar);
   error = FT_Load_Glyph(face, glyph_index, FT_LOAD_DEFAULT);
@@ -46,19 +43,33 @@ Letter* FTengine::getLetter(char letterChar) {
   // get the raw array
   cv::Mat* byteArray = new cv::Mat(face->glyph->bitmap.rows, face->glyph->bitmap.width, CV_8UC1);
 
-  for(int y = 0; y < face->glyph->bitmap.rows; y++) {
+  for(int y = 0; y < byteMap.rows; y++) {
     uchar* rowPtr = byteArray->ptr(y);
-    for(int x = 0; x < face->glyph->bitmap.width; x++) {
-      rowPtr[x] = (byteMap.buffer[y*face->glyph->bitmap.width + x]==0?0:255);
+    for(int x = 0; x < byteMap.width; x++) {
+      rowPtr[x] = (byteMap.buffer[y*byteMap.width + x]==0?0:255);
     }
   }
 
-  FT_Bitmap_Done(library, &byteMap);
-  
-  // create a window
-  cv::namedWindow("Display", CV_WINDOW_AUTOSIZE); 
-  cv::imshow("Display", *byteArray);
-  cv::waitKey(0);
 
-  // return nL;
+  
+  float scalefactor = (face->glyph->metrics.width)/(1.0*byteMap.width);
+
+  Letter* nL = new Letter(letterChar,
+			  byteArray,
+			  byteMap.rows,
+			  (int)face->glyph->metrics.horiBearingY/scalefactor,
+			  (int)face->glyph->metrics.horiBearingY/scalefactor-byteMap.rows,byteMap.width,
+			  (int)face->glyph->metrics.horiBearingX/scalefactor,
+			  (int)((face->glyph->metrics.horiAdvance - face->glyph->metrics.horiBearingX - (face->glyph->metrics.width))/scalefactor));
+
+  FT_Bitmap_Done(library, &byteMap);
+
+  return nL;
+}
+
+int FTengine::getKerning(char letterChar1, char letterChar2) {
+  FT_Vector delta;
+  error = FT_Get_Kerning(face, (FT_ULong) letterChar1, (FT_ULong) letterChar2, FT_KERNING_DEFAULT, &delta);
+
+  return delta.x;
 }

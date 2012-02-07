@@ -2,10 +2,14 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "rhea_config.h"
 #include "config.h"
 #include "FT.h"
+#include "letter.h"
+#include "pair.h"
+
 
 using namespace std;
 
@@ -24,15 +28,22 @@ int main(void) {
   // Create FreeType reader object
   FTengine* FTE;
   FTE = new FTengine();
-  cout << "Loading font:" << FTE->prepareFT(cR->getFontPath(), 1000) << endl;
+  cout << "Loading font:" << FTE->prepareFT(cR->getFontPath(), 1024) << endl;
 
   // Create Letter Objects
-  FTE->getLetter('a');
+  vector<Letter*> letters;
+  for(int i = 97; i < 123; i++) {      // 97 = a, 122 = z
+    letters.push_back(FTE->getLetter( (char) i ) );
+  }
+
   // Create Pair Objects
-  // Create LetterDrone
-  // Pass Letters to LetterDrone, have them analyzed
-  // Create PairAnalyzer
-  // Pass Pairs to PairAnalyzer
+  vector<Pair*> pairs;
+  for(int i = 0; i < letters.size(); i++) {
+    for(int j = 0; j < letters.size(); j++) {
+      pairs.push_back(new Pair(letters[i], letters[j], FTE));
+    }
+  }
+
 
   return 0;
 }

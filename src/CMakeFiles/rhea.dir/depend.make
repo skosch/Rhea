@@ -7,6 +7,8 @@ src/CMakeFiles/rhea.dir/FT.cpp.o: src/letter.h
 src/CMakeFiles/rhea.dir/FT.cpp.o: /usr/include/freetype2/freetype/ftbitmap.h
 src/CMakeFiles/rhea.dir/FT.cpp.o: /usr/include/opencv2/core/core.hpp
 src/CMakeFiles/rhea.dir/FT.cpp.o: /usr/include/opencv2/highgui/highgui.hpp
+src/CMakeFiles/rhea.dir/FT.cpp.o: /usr/include/opencv2/imgproc/imgproc.hpp
+src/CMakeFiles/rhea.dir/FT.cpp.o: /usr/include/opencv2/objdetect/objdetect.hpp
 
 src/CMakeFiles/rhea.dir/config.cpp.o: src/config.cpp
 src/CMakeFiles/rhea.dir/config.cpp.o: src/config.h
@@ -15,13 +17,28 @@ src/CMakeFiles/rhea.dir/letter.cpp.o: src/letter.cpp
 src/CMakeFiles/rhea.dir/letter.cpp.o: src/letter.h
 src/CMakeFiles/rhea.dir/letter.cpp.o: /usr/include/opencv2/core/core.hpp
 src/CMakeFiles/rhea.dir/letter.cpp.o: /usr/include/opencv2/highgui/highgui.hpp
+src/CMakeFiles/rhea.dir/letter.cpp.o: /usr/include/opencv2/imgproc/imgproc.hpp
+src/CMakeFiles/rhea.dir/letter.cpp.o: /usr/include/opencv2/objdetect/objdetect.hpp
 
 src/CMakeFiles/rhea.dir/main.cpp.o: src/FT.h
 src/CMakeFiles/rhea.dir/main.cpp.o: src/config.h
 src/CMakeFiles/rhea.dir/main.cpp.o: src/letter.h
 src/CMakeFiles/rhea.dir/main.cpp.o: src/main.cpp
+src/CMakeFiles/rhea.dir/main.cpp.o: src/pair.h
 src/CMakeFiles/rhea.dir/main.cpp.o: src/rhea_config.h
 src/CMakeFiles/rhea.dir/main.cpp.o: /usr/include/freetype2/freetype/ftbitmap.h
 src/CMakeFiles/rhea.dir/main.cpp.o: /usr/include/opencv2/core/core.hpp
 src/CMakeFiles/rhea.dir/main.cpp.o: /usr/include/opencv2/highgui/highgui.hpp
+src/CMakeFiles/rhea.dir/main.cpp.o: /usr/include/opencv2/imgproc/imgproc.hpp
+src/CMakeFiles/rhea.dir/main.cpp.o: /usr/include/opencv2/objdetect/objdetect.hpp
+
+src/CMakeFiles/rhea.dir/pair.cpp.o: src/FT.h
+src/CMakeFiles/rhea.dir/pair.cpp.o: src/letter.h
+src/CMakeFiles/rhea.dir/pair.cpp.o: src/pair.cpp
+src/CMakeFiles/rhea.dir/pair.cpp.o: src/pair.h
+src/CMakeFiles/rhea.dir/pair.cpp.o: /usr/include/freetype2/freetype/ftbitmap.h
+src/CMakeFiles/rhea.dir/pair.cpp.o: /usr/include/opencv2/core/core.hpp
+src/CMakeFiles/rhea.dir/pair.cpp.o: /usr/include/opencv2/highgui/highgui.hpp
+src/CMakeFiles/rhea.dir/pair.cpp.o: /usr/include/opencv2/imgproc/imgproc.hpp
+src/CMakeFiles/rhea.dir/pair.cpp.o: /usr/include/opencv2/objdetect/objdetect.hpp
 
