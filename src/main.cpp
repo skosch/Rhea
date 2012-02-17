@@ -32,7 +32,7 @@ int main(void) {
 
   // Create Letter Objects
   vector<Letter*> letters;
-  for(int i = 97; i < 123; i++) {      // 97 = a, 122 = z
+  for(int i = 97; i < 98; i++) {      // 97 = a, 122 = z
     letters.push_back(FTE->getLetter( (char) i ) );
   }
 

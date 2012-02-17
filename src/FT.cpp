@@ -22,9 +22,61 @@ int FTengine::prepareFT(string fontPath, int ppem) {
     exit(1);
   }
   error = FT_Set_Pixel_Sizes(face, 0, ppem);
-
+  preparePango(fontPath, ppem);
   return error;
 }
+
+int FTengine::preparePango(string fontPath, int ppem) {
+  PangoLayout *layout;
+  PangoFontMap* PFM;
+  PangoContext* context;
+  PangoFontDescription* desc;
+
+  PFM = pango_ft2_font_map_new();
+  context = pango_font_map_create_context(PANGO_FONT_MAP(PFM));
+  layout = pango_layout_new(context);
+  
+  desc = pango_font_description_from_string("Sans, 20");
+  pango_layout_set_font_description(layout, desc);
+  pango_font_description_free(desc);
+
+  pango_layout_set_text(layout, "VATO!", -1);
+  ppem = 100;
+  pango_ft2_font_map_set_resolution(PANGO_FT2_FONT_MAP(PFM), ppem, ppem);
+
+  pango_layout_context_changed(layout);
+
+  FT_Bitmap *bm;
+
+  bm = g_slice_new(FT_Bitmap);
+  bm->rows = ppem;
+  bm->width = ppem;
+  bm->pitch = ppem;
+  bm->num_grays = 256;
+  bm->pixel_mode = FT_PIXEL_MODE_GRAY;
+
+  bm->buffer = (unsigned char*) g_malloc(bm->pitch * bm->rows);
+  memset(bm->buffer, 0x00, bm->pitch * bm->rows);
+
+  pango_ft2_render_layout(bm, layout, 0, 0);
+
+  int i=0;
+  for(int y=0;y<bm->rows;y++)    
+    {      
+      for(int x=0;x<bm->width;x++)	
+	{	  
+	  if
+	    (bm->buffer[i++]==0) cout << " ";
+	  else
+	    cout << "*";
+	}
+      cout << y << endl;
+    }
+ 
+  // http://www.mail-archive.com/gtk-i18n-list@gnome.org/msg01645.html
+ 
+}
+
 
 Letter* FTengine::getLetter(char letterChar) {
 
@@ -69,7 +121,11 @@ Letter* FTengine::getLetter(char letterChar) {
 
 int FTengine::getKerning(char letterChar1, char letterChar2) {
   FT_Vector delta;
-  error = FT_Get_Kerning(face, (FT_ULong) letterChar1, (FT_ULong) letterChar2, FT_KERNING_DEFAULT, &delta);
-
+  error = FT_Get_Kerning(face, (FT_ULong) letterChar1, (FT_ULong) letterChar2, FT_KERNING_UNSCALED, &delta);
+  if(error) {
+    cout << "Error reading kerning data: " << error << endl;
+  }
+  cout << FT_HAS_KERNING(face);
+  cout << "Getting kerning for " << (FT_ULong) letterChar1 << "." << (FT_ULong) letterChar2 << " face:" << face->family_name << " " << delta.x << endl;
   return delta.x;
 }

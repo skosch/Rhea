@@ -178,6 +178,15 @@ bin/rhea: src/CMakeFiles/rhea.dir/config.cpp.o
 bin/rhea: src/CMakeFiles/rhea.dir/FT.cpp.o
 bin/rhea: src/CMakeFiles/rhea.dir/pair.cpp.o
 bin/rhea: /usr/lib/x86_64-linux-gnu/libfreetype.so
+bin/rhea: /usr/lib/x86_64-linux-gnu/libfreetype.so
+bin/rhea: /usr/lib/x86_64-linux-gnu/libglib-2.0.so
+bin/rhea: /usr/lib/x86_64-linux-gnu/libgobject-2.0.so
+bin/rhea: /usr/lib/x86_64-linux-gnu/libgdk_pixbuf-2.0.so
+bin/rhea: /usr/lib/x86_64-linux-gnu/libgdk-x11-2.0.so
+bin/rhea: /usr/lib/x86_64-linux-gnu/libgtk-x11-2.0.so
+bin/rhea: /usr/lib/x86_64-linux-gnu/libcairo.so
+bin/rhea: /usr/lib/x86_64-linux-gnu/libpango-1.0.so
+bin/rhea: /usr/lib/x86_64-linux-gnu/libatk-1.0.so
 bin/rhea: src/CMakeFiles/rhea.dir/build.make
 bin/rhea: src/CMakeFiles/rhea.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX executable ../bin/rhea"

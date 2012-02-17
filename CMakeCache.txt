@@ -160,6 +160,63 @@ FREETYPE_INCLUDE_DIR_ft2build:PATH=/usr/include
 //Path to a library.
 FREETYPE_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libfreetype.so
 
+//Path to a file.
+GTK2_ATK_INCLUDE_DIR:PATH=/usr/include/atk-1.0
+
+//Path to a library.
+GTK2_ATK_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libatk-1.0.so
+
+//Path to a file.
+GTK2_CAIRO_INCLUDE_DIR:PATH=/usr/include/cairo
+
+//Path to a library.
+GTK2_CAIRO_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libcairo.so
+
+//Path to a file.
+GTK2_FONTCONFIG_INCLUDE_DIR:PATH=/usr/include
+
+//Path to a file.
+GTK2_GDKCONFIG_INCLUDE_DIR:PATH=/usr/lib/x86_64-linux-gnu/gtk-2.0/include
+
+//Path to a file.
+GTK2_GDK_INCLUDE_DIR:PATH=/usr/include/gtk-2.0
+
+//Path to a library.
+GTK2_GDK_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libgdk-x11-2.0.so
+
+//Path to a file.
+GTK2_GDK_PIXBUF_INCLUDE_DIR:PATH=/usr/include/gdk-pixbuf-2.0
+
+//Path to a library.
+GTK2_GDK_PIXBUF_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libgdk_pixbuf-2.0.so
+
+//Path to a file.
+GTK2_GLIBCONFIG_INCLUDE_DIR:PATH=/usr/lib/x86_64-linux-gnu/glib-2.0/include
+
+//Path to a file.
+GTK2_GLIB_INCLUDE_DIR:PATH=/usr/include/glib-2.0
+
+//Path to a library.
+GTK2_GLIB_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libglib-2.0.so
+
+//Path to a file.
+GTK2_GOBJECT_INCLUDE_DIR:PATH=/usr/include/glib-2.0
+
+//Path to a library.
+GTK2_GOBJECT_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libgobject-2.0.so
+
+//Path to a file.
+GTK2_GTK_INCLUDE_DIR:PATH=/usr/include/gtk-2.0
+
+//Path to a library.
+GTK2_GTK_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libgtk-x11-2.0.so
+
+//Path to a file.
+GTK2_PANGO_INCLUDE_DIR:PATH=/usr/include/pango-1.0
+
+//Path to a library.
+GTK2_PANGO_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libpango-1.0.so
+
 //Add some variable to make this script compatible with the other
 // version of FindOpenCV.cmake
 OpenCV_BACKWARD_COMPA:BOOL=OFF
@@ -168,6 +225,9 @@ OpenCV_BACKWARD_COMPA:BOOL=OFF
 OpenCV_DIR:PATH=/usr/share/opencv
 
 OpenCV_FOUND:BOOL=true
+
+//The directory containing a CMake configuration file for Pango.
+Pango_DIR:PATH=Pango_DIR-NOTFOUND
 
 //The directory containing a CMake configuration file for freetype.
 freetype_DIR:PATH=freetype_DIR-NOTFOUND
@@ -307,10 +367,50 @@ CMAKE_USE_RELATIVE_PATHS-ADVANCED:INTERNAL=1
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 //Details about finding Freetype
 FIND_PACKAGE_MESSAGE_DETAILS_Freetype:INTERNAL=[/usr/lib/x86_64-linux-gnu/libfreetype.so][/usr/include;/usr/include/freetype2][v()]
+//Details about finding GTK2_GTK
+FIND_PACKAGE_MESSAGE_DETAILS_GTK2_GTK:INTERNAL=[/usr/lib/x86_64-linux-gnu/libgtk-x11-2.0.so][/usr/include/gtk-2.0][/usr/include/glib-2.0][/usr/lib/x86_64-linux-gnu/glib-2.0/include][/usr/lib/x86_64-linux-gnu/libglib-2.0.so][/usr/include/gtk-2.0][/usr/lib/x86_64-linux-gnu/gtk-2.0/include][/usr/lib/x86_64-linux-gnu/libgdk-x11-2.0.so][v()]
 //ADVANCED property for variable: FREETYPE_INCLUDE_DIR_freetype2
 FREETYPE_INCLUDE_DIR_freetype2-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: FREETYPE_INCLUDE_DIR_ft2build
 FREETYPE_INCLUDE_DIR_ft2build-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: FREETYPE_LIBRARY
 FREETYPE_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GTK2_ATK_INCLUDE_DIR
+GTK2_ATK_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GTK2_ATK_LIBRARY
+GTK2_ATK_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GTK2_CAIRO_INCLUDE_DIR
+GTK2_CAIRO_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GTK2_CAIRO_LIBRARY
+GTK2_CAIRO_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GTK2_FONTCONFIG_INCLUDE_DIR
+GTK2_FONTCONFIG_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GTK2_GDKCONFIG_INCLUDE_DIR
+GTK2_GDKCONFIG_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GTK2_GDK_INCLUDE_DIR
+GTK2_GDK_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GTK2_GDK_LIBRARY
+GTK2_GDK_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GTK2_GDK_PIXBUF_INCLUDE_DIR
+GTK2_GDK_PIXBUF_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GTK2_GDK_PIXBUF_LIBRARY
+GTK2_GDK_PIXBUF_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GTK2_GLIBCONFIG_INCLUDE_DIR
+GTK2_GLIBCONFIG_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GTK2_GLIB_INCLUDE_DIR
+GTK2_GLIB_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GTK2_GLIB_LIBRARY
+GTK2_GLIB_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GTK2_GOBJECT_INCLUDE_DIR
+GTK2_GOBJECT_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GTK2_GOBJECT_LIBRARY
+GTK2_GOBJECT_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GTK2_GTK_INCLUDE_DIR
+GTK2_GTK_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GTK2_GTK_LIBRARY
+GTK2_GTK_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GTK2_PANGO_INCLUDE_DIR
+GTK2_PANGO_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GTK2_PANGO_LIBRARY
+GTK2_PANGO_LIBRARY-ADVANCED:INTERNAL=1
 

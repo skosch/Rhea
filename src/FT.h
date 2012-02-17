@@ -11,7 +11,8 @@
 #include FT_FREETYPE_H
 #include <vector>
 #include "core/core.hpp"
-
+#include <pango/pangoft2.h>
+#include <fontconfig/fontconfig.h>
 #include "letter.h"
 
 using namespace std;
@@ -23,6 +24,7 @@ class FTengine {
   ~FTengine();
 
   int prepareFT(string fontPath, int ppem);
+  int preparePango(string fontPath, int ppem);
   Letter* getLetter(char letterChar);
   int getKerning(char letterChar1, char letterChar2);
 

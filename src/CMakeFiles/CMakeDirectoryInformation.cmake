@@ -11,6 +11,14 @@ SET(CMAKE_FORCE_UNIX_PATHS 1)
 # The C and CXX include file search paths:
 SET(CMAKE_C_INCLUDE_PATH
   "/usr/include/freetype2"
+  "/usr/include/glib-2.0"
+  "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
+  "/usr/include/gdk-pixbuf-2.0"
+  "/usr/include/gtk-2.0"
+  "/usr/lib/x86_64-linux-gnu/gtk-2.0/include"
+  "/usr/include/cairo"
+  "/usr/include/pango-1.0"
+  "/usr/include/atk-1.0"
   "src/rhea"
   "/usr/include/opencv2"
   )
