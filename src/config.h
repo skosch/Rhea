@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <cstdlib>
 
 class ConfigReader {
 
@@ -10,11 +11,13 @@ class ConfigReader {
   ~ConfigReader();
 
   void readConfigFile(std::string filePath);
-  std::string getFontPath();
+  std::string getFontDesc();
   std::string getCharset();
+  int getPPEM();
   //  string getExceptedFeatures();
 
  private:
-  std::string fontPath;
+  std::string fontDesc;
+  int ppem;
   std::string charSet;
 };

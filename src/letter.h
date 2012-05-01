@@ -14,6 +14,7 @@
 class Letter {
 
  public:
+  Letter();
   Letter(char letterChar, cv::Mat* rawArray, int height, int y_top,
 	 int y_bottom, int width, int l_sb, int r_sb);
   ~Letter();

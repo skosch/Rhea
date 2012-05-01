@@ -23,16 +23,22 @@ class FTengine {
   FTengine();
   ~FTengine();
 
-  int prepareFT(string fontPath, int ppem);
-  int preparePango(string fontPath, int ppem);
+  int preparePango(string fontDescription, int ppem);
   Letter* getLetter(char letterChar);
-  int getKerning(char letterChar1, char letterChar2);
+  int getSpacing(char letterChar1, char letterChar2);
 
  private:
   FT_Library library;
   FT_Face face;
   int error;
-  
+  int ppem;
+
+  PangoLayout *layout;
+  PangoFontMap* PFM;
+  PangoFont* pfont;
+  PangoContext* context;
+  PangoFontDescription* desc;
+
 };
 
 

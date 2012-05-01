@@ -6,10 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/sebastian/autokern/rhea/src/FT.cpp
-FT.h
-/home/sebastian/autokern/rhea/src/FT.h
-
 /home/sebastian/autokern/rhea/src/FT.h
 iostream
 -
@@ -30,6 +26,16 @@ fontconfig/fontconfig.h
 letter.h
 /home/sebastian/autokern/rhea/src/letter.h
 
+/home/sebastian/autokern/rhea/src/config.h
+string
+-
+iostream
+-
+fstream
+-
+cstdlib
+-
+
 /home/sebastian/autokern/rhea/src/letter.h
 core/core.hpp
 /home/sebastian/autokern/rhea/src/core/core.hpp
@@ -45,6 +51,42 @@ string
 -
 vector
 -
+
+/home/sebastian/autokern/rhea/src/main.cpp
+iostream
+-
+string
+-
+vector
+-
+rhea_config.h
+/home/sebastian/autokern/rhea/src/rhea_config.h
+config.h
+/home/sebastian/autokern/rhea/src/config.h
+FT.h
+/home/sebastian/autokern/rhea/src/FT.h
+letter.h
+/home/sebastian/autokern/rhea/src/letter.h
+pair.h
+/home/sebastian/autokern/rhea/src/pair.h
+
+/home/sebastian/autokern/rhea/src/pair.h
+string
+-
+iostream
+-
+vector
+-
+ft2build.h
+-
+core/core.hpp
+/home/sebastian/autokern/rhea/src/core/core.hpp
+letter.h
+/home/sebastian/autokern/rhea/src/letter.h
+FT.h
+/home/sebastian/autokern/rhea/src/FT.h
+
+/home/sebastian/autokern/rhea/src/rhea_config.h
 
 /usr/include/freetype2/freetype/ftbitmap.h
 ft2build.h
