@@ -119,6 +119,7 @@ src/CMakeFiles/rhea.dir/config.cpp.o
 src/CMakeFiles/rhea.dir/letter.cpp.o
  /home/sebastian/autokern/rhea/src/letter.cpp
  /home/sebastian/autokern/rhea/src/letter.h
+ /usr/include/freetype2/freetype/ftbitmap.h
  /usr/include/opencv2/core/core.hpp
  /usr/include/opencv2/highgui/highgui.hpp
  /usr/include/opencv2/imgproc/imgproc.hpp

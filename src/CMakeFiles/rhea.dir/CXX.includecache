@@ -17,8 +17,6 @@ freetype/ftbitmap.h
 -
 vector
 -
-core/core.hpp
-/home/sebastian/autokern/rhea/src/core/core.hpp
 pango/pangoft2.h
 -
 fontconfig/fontconfig.h
@@ -45,6 +43,12 @@ imgproc/imgproc.hpp
 /home/sebastian/autokern/rhea/src/imgproc/imgproc.hpp
 objdetect/objdetect.hpp
 /home/sebastian/autokern/rhea/src/objdetect/objdetect.hpp
+boost/gil/gil_all.hpp
+/home/sebastian/autokern/rhea/src/boost/gil/gil_all.hpp
+ft2build.h
+-
+freetype/ftbitmap.h
+-
 iostream
 -
 string
@@ -67,6 +71,10 @@ FT.h
 /home/sebastian/autokern/rhea/src/FT.h
 letter.h
 /home/sebastian/autokern/rhea/src/letter.h
+pair.h
+/home/sebastian/autokern/rhea/src/pair.h
+
+/home/sebastian/autokern/rhea/src/pair.cpp
 pair.h
 /home/sebastian/autokern/rhea/src/pair.h
 

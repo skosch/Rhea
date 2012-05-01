@@ -21,14 +21,17 @@ int FTengine::preparePango(string fontDescription = "Arial 20", int ppem = 100) 
   pfont = pango_font_map_load_font(PFM, context, desc);
 
   cout << "PANGO_SCALE: " << PANGO_SCALE << endl;
+  return 0;
 }
 
 
 Letter* FTengine::getLetter(char letterChar) {
-  pango_layout_set_text(layout, &letterChar, -1);
+  char text[2] = {letterChar, '\0'};
+  pango_layout_set_text(layout, text, -1);
   pango_layout_context_changed(layout);
 
   FT_Bitmap *bm;
+  PangoRectangle inkrect;
 
   bm = g_slice_new(FT_Bitmap);
   bm->rows = ppem;
@@ -39,35 +42,56 @@ Letter* FTengine::getLetter(char letterChar) {
 
   bm->buffer = (unsigned char*) g_malloc(bm->pitch * bm->rows);
   memset(bm->buffer, 0x00, bm->pitch * bm->rows);
+  pango_layout_get_pixel_extents(layout, &inkrect, NULL);
+  
+  int y_baseline = (int)((float) pango_layout_get_baseline(layout))/PANGO_SCALE - inkrect.y;
+  pango_ft2_render_layout(bm, layout, -inkrect.x, -inkrect.y);
 
-  pango_ft2_render_layout(bm, layout, 0, 0);
+  for(int i = 0; i < bm->rows; i++) {
+    for(int j = 0; j < bm->pitch; j++) {
+      bm->buffer[i*bm->pitch + j] &= 128; 
+      bm->buffer[i*bm->pitch + j] *= 255; // this line can be removed for performance
+    }
+  }
+  
+  // create a letter object here, then return it
+  Letter *result = new Letter(letterChar, bm, inkrect.height, y_baseline, inkrect.width);
+
+
+  return result;
 }
 
 
+/************************************** 
+ * getSpacing() gets the width of each glyph, and the 
+ * width of both glyphs set together (incl. kerning) to
+ * get the total horizontal spacing between the two glyphs.
+ **************************************/
 int FTengine::getSpacing(char letterChar1, char letterChar2) {
+  PangoRectangle l_inkrect;
+  PangoRectangle r_inkrect;
+  PangoRectangle inkrect;
 
-  // first, layout both characters to get the kerned length
   char text[3] = {letterChar1, letterChar2, '\0'};
   pango_layout_set_text(layout, text, -1);
   pango_layout_context_changed(layout);
 
-  PangoRectangle inkrect;
   pango_layout_get_pixel_extents(layout, &inkrect, NULL);
   int totalwidth = inkrect.width;
-  
-  PangoItem* item = (PangoItem*) pango_itemize(context, text, 0, strlen(text), pango_layout_get_attributes(layout), NULL)->data;
-  PangoGlyphString* glyphstr = pango_glyph_string_new();
-  pango_shape(text+item->offset, item->length, &item->analysis, glyphstr);
 
-  PangoRectangle l_inkrect;
-  PangoRectangle r_inkrect;
-  pango_font_get_glyph_extents(pfont, glyphstr->glyphs[0].glyph, &l_inkrect, NULL);
-  pango_font_get_glyph_extents(pfont, glyphstr->glyphs[1].glyph, &r_inkrect, NULL);
-  int leftwidth = ((float) l_inkrect.width)/PANGO_SCALE;
-  int rightwidth = ((float) r_inkrect.width)/PANGO_SCALE;
-  pango_item_free(item);
-  pango_glyph_string_free(glyphstr);
+  pango_layout_set_text(layout, text, 1);
+  pango_layout_context_changed(layout);
+
+  pango_layout_get_pixel_extents(layout, &l_inkrect, NULL);
+  int leftwidth = l_inkrect.width;
+
+  pango_layout_set_text(layout, text+1, 1);
+  pango_layout_context_changed(layout);
+
+  pango_layout_get_pixel_extents(layout, &r_inkrect, NULL);
+  int rightwidth = r_inkrect.width;
 
   return totalwidth - leftwidth - rightwidth;
 }
+
 

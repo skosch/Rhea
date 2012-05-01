@@ -10,10 +10,11 @@
 #include <freetype/ftbitmap.h>
 #include FT_FREETYPE_H
 #include <vector>
-#include "core/core.hpp"
 #include <pango/pangoft2.h>
 #include <fontconfig/fontconfig.h>
 #include "letter.h"
+
+
 
 using namespace std;
 

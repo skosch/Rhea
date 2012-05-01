@@ -3,28 +3,47 @@
 using namespace cv;
 using namespace std;
 
-Letter::Letter(char letterChar, cv::Mat* rawArray, int height, int y_top, 
-	       int y_bottom, int width, int l_sb, int r_sb) {
+Letter::Letter(char letterChar, FT_Bitmap* rawArray, int height, int y_baseline, int width) {
 
   // set variables
   this->letterChar = letterChar;
-  lMat = rawArray;
+  
+  /*
+  // this puts the full ppem^2 square into cMat
+  cMat = cv::Mat(rawArray->rows, rawArray->width, CV_8UC1, rawArray->buffer, rawArray->pitch);
+  
+  // crop cMat to the relevant size
+  cMat = cMat(Rect(0, 0, width, height));
+  
+  // create the GIL matrix (gMat) if needed here ...
+  
+  */
+
+  pixels = rawArray->buffer; // this points to a bitmap still ppem^2 big
+
+  for(int row = 0; row < height; row++) {
+    for(int x = 0; x < width; x++) {
+      if(pixels[row*rawArray->pitch+x] > 0) {
+	point blp;
+	blp.x = x;
+	blp.y = y_baseline-row;
+	blackpixels.push_back(blp);
+      }
+    }
+  }
 
   this->height = height;
-  this->y_top = y_top;
-  this->y_bottom = y_bottom;
+  this->y_top = y_baseline;
+  this->y_bottom = height - y_baseline;
   this->width = width;
-  this->l_sb = l_sb;
-  this->r_sb = r_sb;
 
-  //  printLetterInfo();
-  analyze();
-
+  //printLetterInfo();
+  //analyze();
 }
 
 void Letter::analyze() {
   //f_houghTransform();
-  f_moments();
+  //f_moments();
 }
 
 void Letter::printLetterInfo() {
@@ -33,19 +52,17 @@ void Letter::printLetterInfo() {
   cout << "Ytop:\t" << y_top << endl;
   cout << "Ybottom:" << y_bottom << endl;
   cout << "Width:\t" << width << endl;
-  cout << "LSB:\t" << l_sb << endl;
-  cout << "RSB:\t" << r_sb << endl;
 
   // create a window
   cv::namedWindow("Display", CV_WINDOW_AUTOSIZE); 
-  cv::imshow("Display", *lMat);
+  cv::imshow("Display", cMat);
   cv::waitKey(0);
 }
 
 
 void Letter::f_moments() {
   Moments moms;
-  moms = moments( *lMat, true );
+  moms = moments( cMat, true );
   
 }
 
@@ -55,7 +72,7 @@ void Letter::f_houghTransform() {
   vector<cv::Vec4i> lines;
  cv::Mat dst, color_dst;
  
- cv::Canny(*lMat, dst, 50, 200, 3);
+ cv::Canny(cMat, dst, 50, 200, 3);
  cv::cvtColor(dst, color_dst, CV_GRAY2BGR);
  cv::HoughLinesP( dst, lines, 1, CV_PI/180, 80, 30, 10 );
  for( size_t i = 0; i < lines.size(); i++ )

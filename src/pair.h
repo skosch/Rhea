@@ -15,14 +15,13 @@ class Pair {
  public:
   Pair(Letter* lLetter, Letter* rLetter, FTengine* FTE);
 
+  
 
  private:
   Letter* lL;
   Letter* rL;
 
   int spacing; // rsb + kerning + lsb
-  int kerning; // kerning value for this pair
-
 
 };
 

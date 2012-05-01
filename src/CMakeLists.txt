@@ -22,6 +22,16 @@ endif (GTK2_FOUND)
 include_directories(rhea "/usr/include/pango-1.0")
 target_link_libraries(rhea pthread pango-1.0 gobject-2.0 gmodule-2.0 gthread-2.0 rt glib-2.0)
 
+
+find_package (Boost REQUIRED)
+if (BOOST_FOUND)
+  include_directories(${Boost_INCLUDE_DIRS})
+  target_link_libraries (rhea ${Boost_LIBRARIES})
+endif (BOOST_FOUND)
+
+
+
+
 #find_package (OpenCV REQUIRED)
 #if (OpenCV_FOUND)
   include_directories(rhea "/usr/include/opencv2")
