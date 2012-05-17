@@ -33,6 +33,8 @@ class FTengine {
   FT_Face face;
   int error;
   int ppem;
+  int xheight;
+  int capheight;
 
   PangoLayout *layout;
   PangoFontMap* PFM;

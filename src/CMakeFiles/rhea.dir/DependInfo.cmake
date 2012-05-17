@@ -9,6 +9,7 @@ SET(CMAKE_DEPENDS_CHECK_CXX
   "/home/sebastian/autokern/rhea/src/letter.cpp" "/home/sebastian/autokern/rhea/src/CMakeFiles/rhea.dir/letter.cpp.o"
   "/home/sebastian/autokern/rhea/src/main.cpp" "/home/sebastian/autokern/rhea/src/CMakeFiles/rhea.dir/main.cpp.o"
   "/home/sebastian/autokern/rhea/src/pair.cpp" "/home/sebastian/autokern/rhea/src/CMakeFiles/rhea.dir/pair.cpp.o"
+  "/home/sebastian/autokern/rhea/src/triplet.cpp" "/home/sebastian/autokern/rhea/src/CMakeFiles/rhea.dir/triplet.cpp.o"
   )
 SET(CMAKE_CXX_COMPILER_ID "GNU")
 

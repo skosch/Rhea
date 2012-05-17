@@ -4,6 +4,8 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <cmath>
+#include <limits.h>
 #include <ft2build.h>
 #include "core/core.hpp"
 
@@ -14,12 +16,17 @@ class Pair {
 
  public:
   Pair(Letter* lLetter, Letter* rLetter, FTengine* FTE);
-
-  
+  void fillMatrix_dxdy_limited(vector<vector<int>> *matrix, int maxdx, int maxdy, int combno);
+  void fillMatrix_ydxdy_limited(vector<vector<int>> *matrix, int maxdx, int maxdy, int maxy, int combno);
+  void findPairFeatures(vector<vector<int>> *matrix, int combno);
+  void proxiStemAnalysis(vector<vector<int>> *matrix, int combno);
 
  private:
   Letter* lL;
   Letter* rL;
+
+  int lWidth;
+  int rWidth;
 
   int spacing; // rsb + kerning + lsb
 

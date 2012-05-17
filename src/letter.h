@@ -12,6 +12,7 @@
 #include FT_FREETYPE_H
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
 
@@ -24,24 +25,33 @@ class Letter {
 
  public:
   Letter();
-  Letter(char letterChar, FT_Bitmap* rawArray, int height, int y_baseline, int width);
+  Letter(char letterChar, FT_Bitmap* rawArray, int height, int y_baseline, int width, int xheight, int capheight);
   ~Letter();
   char getLetterChar() {return this->letterChar;}
   int getHeight() {return this->height;}
   int getYtop() {return this->y_top;}
   int getYbottom() {return this->y_bottom;}
   int getWidth() {return this->width;}
-  int getLSB() {return this->l_sb;}
-  int getRSB() {return this->r_sb;}
-
+ 
   void printLetterInfo();
   void analyze();
 
-  void f_houghTransform();
+  void f_rlEdges();
+  void f_houghstems();
   void f_moments();
   
   unsigned char* pixels;
   std::vector<point> blackpixels;
+  std::vector<int> rEdgeOffset;
+  std::vector<int> lEdgeOffset;
+
+  int lStemOffset = 0; // number of pixels from edge to stem center
+  int rStemOffset = 0;
+  float lStemIntensity = 0; // percentage of validty of the max
+  float rStemIntensity = 0; 
+
+  int height;       // from bottom to top of glyph
+  int xheight;
 
  private:
   char letterChar;
@@ -50,13 +60,13 @@ class Letter {
   cv::Mat cMat;
 
   // dimensions:
-  int height;       // from bottom to top of glyph
+ 
   int y_top;        // y-coordinate of top of glyph, from baseline
   int y_bottom;     // y-coordinate of bottom of glyph, from baseline
   int width;        // between left to right extreme vertices
-  int l_sb;         // left sidebearing
-  int r_sb;         // right sidebearing
-
+  int capheight;
+  int houghstem_miny = 0; // everything below is ignored in houghstem
+  int houghstem_maxy = 0; 
 };
 
 #endif

@@ -3,12 +3,12 @@
 using namespace cv;
 using namespace std;
 
-Letter::Letter(char letterChar, FT_Bitmap* rawArray, int height, int y_baseline, int width) {
+Letter::Letter(char letterChar, FT_Bitmap* rawArray, int height, int y_baseline, int width, int xheight, int capheight) {
 
   // set variables
   this->letterChar = letterChar;
   
-  /*
+  
   // this puts the full ppem^2 square into cMat
   cMat = cv::Mat(rawArray->rows, rawArray->width, CV_8UC1, rawArray->buffer, rawArray->pitch);
   
@@ -17,7 +17,7 @@ Letter::Letter(char letterChar, FT_Bitmap* rawArray, int height, int y_baseline,
   
   // create the GIL matrix (gMat) if needed here ...
   
-  */
+  
 
   pixels = rawArray->buffer; // this points to a bitmap still ppem^2 big
 
@@ -32,12 +32,22 @@ Letter::Letter(char letterChar, FT_Bitmap* rawArray, int height, int y_baseline,
     }
   }
 
+  rEdgeOffset.resize(xheight);
+  std::fill(rEdgeOffset.begin(), rEdgeOffset.end(), width);
+  lEdgeOffset.resize(xheight);
+  std::fill(lEdgeOffset.begin(), lEdgeOffset.end(), width);
+
   this->height = height;
   this->y_top = y_baseline;
   this->y_bottom = height - y_baseline;
   this->width = width;
+  this->xheight = xheight;
+  this->capheight = capheight;
+  this->houghstem_maxy = (int) xheight*0.8;
+  this->houghstem_miny = (int) xheight*0.15;
 
   //printLetterInfo();
+  f_houghstems();
   //analyze();
 }
 
@@ -66,27 +76,111 @@ void Letter::f_moments() {
   
 }
 
+void Letter::f_rlEdges() {
+  // this goes from 0 to xheight
+  for(int i = 0; i < blackpixels.size(); i++) {
+    if(blackpixels[i].x < lEdgeOffset[blackpixels[i].y]) {
+      lEdgeOffset[blackpixels[i].y] = blackpixels[i].x;
+    }
+    if((width-blackpixels[i].x) < rEdgeOffset[blackpixels[i].y]) {
+      rEdgeOffset[blackpixels[i].y] = width-blackpixels[i].x;
+    }
+  }
+}
+
+void Letter::f_houghstems() {
+  vector<int> stemIntensity;
+  stemIntensity.resize(width);
+  std::fill(stemIntensity.begin(), stemIntensity.end(), 0);
+
+  // iterate through letter columns and aggregate down
+
+  for(int i = 0; i < blackpixels.size(); i++) {
+    if(blackpixels[i].y > houghstem_miny && blackpixels[i].y < houghstem_maxy) {
+      stemIntensity[blackpixels[i].x]++;
+    }
+  }
+
+  // smooth stem intensity
+    for(int i = 3; i < stemIntensity.size()-3; i++) {
+      stemIntensity[i] = (int) ((float)(stemIntensity[i-3]+stemIntensity[i-2]+stemIntensity[i-1]+stemIntensity[i]+stemIntensity[i+1]+stemIntensity[i+2]+stemIntensity[i+3]))/7;
+    }
+
+  // find max stems from left and right edge in left and right halves
+  int maxstemheight = houghstem_maxy - houghstem_miny;
+  for(int i = 0; i < min(2*width/3.0, xheight/2.0); i++) {
+    if( ((float) stemIntensity[i])/maxstemheight > lStemIntensity) {
+      lStemIntensity = ((float) stemIntensity[i]/maxstemheight);
+      lStemOffset = i;
+    }
+  }
+
+  for(int i = width - 1; i >  width-min(2*width/3.0, xheight/2.0); i--) {
+    if( ((float) stemIntensity[i])/maxstemheight > rStemIntensity) {
+      rStemIntensity = ((float) stemIntensity[i]/maxstemheight);
+      rStemOffset = width - i;
+    }
+  }
+
+  // find extents of surrounding plateaus (90% of max)
+  int lStemlExtent = 0;
+  int lStemrExtent = 0;
+  for( lStemlExtent = 0; stemIntensity[lStemOffset-lStemlExtent]>0.9*maxstemheight*lStemIntensity; lStemlExtent++) {}
+  for( lStemrExtent = 0; stemIntensity[lStemOffset+lStemrExtent]>0.9*maxstemheight*lStemIntensity; lStemrExtent++) {}
+  lStemOffset += (lStemrExtent-lStemlExtent)/2.0;
+  lStemIntensity = ((float) stemIntensity[lStemOffset]/maxstemheight);
+
+  int rStemlExtent = 0;
+  int rStemrExtent = 0;
+  for( rStemlExtent = 0; stemIntensity[width-rStemOffset-rStemlExtent]>0.9*maxstemheight*rStemIntensity; rStemlExtent++) {}
+  for( rStemrExtent = 0; stemIntensity[width-rStemOffset+rStemrExtent]>0.9*maxstemheight*rStemIntensity; rStemrExtent++) {}
+  rStemOffset -= (rStemrExtent-rStemlExtent)/2.0;
+  rStemIntensity = ((float) stemIntensity[width-rStemOffset]/maxstemheight);
+  /*
+  cout << "Letter " << letterChar << " ***********" << endl;
+  cout << "LStemOffset: " <<  lStemOffset << endl;
+  cout << "LStemIntensity: " << lStemIntensity << endl;
+  cout << "RStemOffset: " << rStemOffset << endl;
+  cout << "RStemIntensity: " << rStemIntensity << endl;
+  cout << "RStemRExtent: " << rStemrExtent << endl;
+  cout << "RStemLExtent: " << rStemlExtent << endl;
 
 
-void Letter::f_houghTransform() {
-  vector<cv::Vec4i> lines;
- cv::Mat dst, color_dst;
- 
- cv::Canny(cMat, dst, 50, 200, 3);
- cv::cvtColor(dst, color_dst, CV_GRAY2BGR);
- cv::HoughLinesP( dst, lines, 1, CV_PI/180, 80, 30, 10 );
- for( size_t i = 0; i < lines.size(); i++ )
-   {
-     cv::line( color_dst, cv::Point(lines[i][0], lines[i][1]),
-	       cv::Point(lines[i][2], lines[i][3]), cv::Scalar(0,0,255), 3, 8 );
-   }
- /* cv::namedWindow( "Source", 1 );
- cv::imshow( "Source", *lMat );
+  // save to file
+  ofstream outdata;
+  outdata.open("letter_houghs.csv", ios_base::app);
+  if(!outdata) {
+    cerr << "Error: Could not create output file.\n";
+    exit(1);
+  }
+  outdata << letterChar;
+  for(int i = 0; i < stemIntensity.size(); i++) {
+    outdata << stemIntensity[i] << " ";
+  }
+  outdata << "\n";  
 
- cv::namedWindow( "Detected Lines", 1 );
- cv::imshow( "Detected Lines", color_dst );
 
- cv::waitKey(0);*/
+  // display the result
+  cv::Mat hMat(cMat); // copy original letter matrix
+  hMat.convertTo(hMat, CV_8UC3); // convert to RGB
+
+  Point3_<uchar>* p = hMat.ptr<Point3_<uchar>>(height-1,0);
+  for(int i = 0; i < width/2; i++) {
+    if(i != lStemOffset) {
+      p = hMat.ptr<Point3_<uchar>>((int) (height - stemIntensity[i])-1,i);
+    p->x = 255;}
+  }
+  for(int i = width -1; i > width/2; i--) {
+    if(i != width - rStemOffset) {
+      p = hMat.ptr<Point3_<uchar>>((int) (height - stemIntensity[i])-1,i);
+    p->x = 255;}
+  }
+  
+  cv::namedWindow("Display", CV_WINDOW_AUTOSIZE); 
+  cv::imshow("Display", hMat);
+  cv::waitKey(0);
+  
+  */
 }
 
 

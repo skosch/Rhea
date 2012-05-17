@@ -3,7 +3,7 @@ set (rhea_VERISON_MAJOR 0)
 set (rhea_VERSION_MINOR 1)
 configure_file("rhea_config.h.in" "rhea_config.h")
 
-add_executable(rhea main.cpp letter.cpp config.cpp FT.cpp pair.cpp)
+add_executable(rhea main.cpp letter.cpp config.cpp FT.cpp pair.cpp triplet.cpp)
 
 SET(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/bin")
 

@@ -229,6 +229,30 @@ pair.cpp.s:
 	cd /home/sebastian/autokern/rhea && $(MAKE) -f src/CMakeFiles/rhea.dir/build.make src/CMakeFiles/rhea.dir/pair.cpp.s
 .PHONY : pair.cpp.s
 
+triplet.o: triplet.cpp.o
+.PHONY : triplet.o
+
+# target to build an object file
+triplet.cpp.o:
+	cd /home/sebastian/autokern/rhea && $(MAKE) -f src/CMakeFiles/rhea.dir/build.make src/CMakeFiles/rhea.dir/triplet.cpp.o
+.PHONY : triplet.cpp.o
+
+triplet.i: triplet.cpp.i
+.PHONY : triplet.i
+
+# target to preprocess a source file
+triplet.cpp.i:
+	cd /home/sebastian/autokern/rhea && $(MAKE) -f src/CMakeFiles/rhea.dir/build.make src/CMakeFiles/rhea.dir/triplet.cpp.i
+.PHONY : triplet.cpp.i
+
+triplet.s: triplet.cpp.s
+.PHONY : triplet.s
+
+# target to generate assembly for a file
+triplet.cpp.s:
+	cd /home/sebastian/autokern/rhea && $(MAKE) -f src/CMakeFiles/rhea.dir/build.make src/CMakeFiles/rhea.dir/triplet.cpp.s
+.PHONY : triplet.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -253,6 +277,9 @@ help:
 	@echo "... pair.o"
 	@echo "... pair.i"
 	@echo "... pair.s"
+	@echo "... triplet.o"
+	@echo "... triplet.i"
+	@echo "... triplet.s"
 .PHONY : help
 
 

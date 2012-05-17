@@ -20,7 +20,21 @@ int FTengine::preparePango(string fontDescription = "Arial 20", int ppem = 100) 
   pango_ft2_font_map_set_resolution(PANGO_FT2_FONT_MAP(PFM), ppem, ppem);
   pfont = pango_font_map_load_font(PFM, context, desc);
 
-  cout << "PANGO_SCALE: " << PANGO_SCALE << endl;
+  // get xheight, cause letters need this stuff all the time
+  PangoRectangle inkrect;
+  pango_layout_set_text(layout, "x", -1);
+  pango_layout_context_changed(layout);
+  pango_layout_get_pixel_extents(layout, &inkrect, NULL);
+  xheight = (inkrect.height);
+  // get capheight, cause letters need this stuff all the time
+  pango_layout_set_text(layout, "Y", -1);
+  pango_layout_context_changed(layout);
+  pango_layout_get_pixel_extents(layout, &inkrect, NULL);
+  capheight = (inkrect.height);
+
+  cout << "xheight: " << xheight << endl;
+  cout << "Capheight: " << capheight << endl;
+  cout << endl;
   return 0;
 }
 
@@ -55,7 +69,7 @@ Letter* FTengine::getLetter(char letterChar) {
   }
   
   // create a letter object here, then return it
-  Letter *result = new Letter(letterChar, bm, inkrect.height, y_baseline, inkrect.width);
+  Letter *result = new Letter(letterChar, bm, inkrect.height, y_baseline, inkrect.width, xheight, capheight);
 
 
   return result;
