@@ -35,9 +35,11 @@ endif (BOOST_FOUND)
 #find_package (OpenCV REQUIRED)
 #if (OpenCV_FOUND)
   include_directories(rhea "/usr/include/opencv2")
-  target_link_libraries (rhea m opencv_core opencv_imgproc opencv_highgui opencv_ml opencv_features2d opencv_objdetect )
+  target_link_libraries (rhea m opencv_core opencv_imgproc opencv_highgui opencv_ml opencv_features2d opencv_objdetect)
+
 #else (OpenCV_FOUND)
 #  message("Couldnt find OpenCV!")
 #endif (OpenCV_FOUND)
 
+target_link_libraries(rhea lpsolve55 colamd dl)
 

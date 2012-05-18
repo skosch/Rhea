@@ -28,12 +28,14 @@ class FTengine {
   Letter* getLetter(char letterChar);
   int getSpacing(char letterChar1, char letterChar2);
 
+  int xheight;
+
  private:
   FT_Library library;
   FT_Face face;
   int error;
   int ppem;
-  int xheight;
+
   int capheight;
 
   PangoLayout *layout;

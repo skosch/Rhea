@@ -32,10 +32,7 @@ Letter::Letter(char letterChar, FT_Bitmap* rawArray, int height, int y_baseline,
     }
   }
 
-  rEdgeOffset.resize(xheight);
-  std::fill(rEdgeOffset.begin(), rEdgeOffset.end(), width);
-  lEdgeOffset.resize(xheight);
-  std::fill(lEdgeOffset.begin(), lEdgeOffset.end(), width);
+
 
   this->height = height;
   this->y_top = y_baseline;
@@ -45,6 +42,18 @@ Letter::Letter(char letterChar, FT_Bitmap* rawArray, int height, int y_baseline,
   this->capheight = capheight;
   this->houghstem_maxy = (int) xheight*0.8;
   this->houghstem_miny = (int) xheight*0.15;
+
+  rBubbleExtent.resize(xheight);
+  std::fill(rBubbleExtent.begin(), rBubbleExtent.end(), 0);
+  lBubbleExtent.resize(xheight);
+  std::fill(lBubbleExtent.begin(), lBubbleExtent.end(), 0);
+
+  rEdgeOffset.resize(xheight);
+  std::fill(rEdgeOffset.begin(), rEdgeOffset.end(), width);
+  lEdgeOffset.resize(xheight);
+  std::fill(lEdgeOffset.begin(), lEdgeOffset.end(), width);
+  f_rlEdges();
+
 
   //printLetterInfo();
   f_houghstems();
@@ -79,6 +88,8 @@ void Letter::f_moments() {
 void Letter::f_rlEdges() {
   // this goes from 0 to xheight
   for(int i = 0; i < blackpixels.size(); i++) {
+    if(blackpixels[i].y < 0 or blackpixels[i].y >= xheight) continue;
+
     if(blackpixels[i].x < lEdgeOffset[blackpixels[i].y]) {
       lEdgeOffset[blackpixels[i].y] = blackpixels[i].x;
     }
@@ -136,7 +147,7 @@ void Letter::f_houghstems() {
   for( rStemrExtent = 0; stemIntensity[width-rStemOffset+rStemrExtent]>0.9*maxstemheight*rStemIntensity; rStemrExtent++) {}
   rStemOffset -= (rStemrExtent-rStemlExtent)/2.0;
   rStemIntensity = ((float) stemIntensity[width-rStemOffset]/maxstemheight);
-  /*
+  
   cout << "Letter " << letterChar << " ***********" << endl;
   cout << "LStemOffset: " <<  lStemOffset << endl;
   cout << "LStemIntensity: " << lStemIntensity << endl;
@@ -145,7 +156,7 @@ void Letter::f_houghstems() {
   cout << "RStemRExtent: " << rStemrExtent << endl;
   cout << "RStemLExtent: " << rStemlExtent << endl;
 
-
+  /*
   // save to file
   ofstream outdata;
   outdata.open("letter_houghs.csv", ios_base::app);
@@ -158,7 +169,6 @@ void Letter::f_houghstems() {
     outdata << stemIntensity[i] << " ";
   }
   outdata << "\n";  
-
 
   // display the result
   cv::Mat hMat(cMat); // copy original letter matrix
@@ -179,8 +189,53 @@ void Letter::f_houghstems() {
   cv::namedWindow("Display", CV_WINDOW_AUTOSIZE); 
   cv::imshow("Display", hMat);
   cv::waitKey(0);
+    */
   
-  */
 }
 
+void Letter::setBubble(int y, int extent, bool leftside) {
+  if(leftside) {
+    lBubbleExtent[y] = extent;
+  } else {
+    rBubbleExtent[y] = extent;
+  }
+}
 
+void Letter::showBubbledLetter() {
+
+  // calculate max bubble extent on either side, add that to cMat
+  int maxlbubble = *max_element(lBubbleExtent.begin(), lBubbleExtent.end());
+  int maxrbubble = *max_element(rBubbleExtent.begin(), rBubbleExtent.end());
+  
+  cv::Mat hMat = cv::Mat::zeros(xheight,width+maxlbubble+maxrbubble, CV_8UC3);
+
+  cv::Point origin(maxlbubble,0);
+  cMat = cv::Mat(cMat, cv::Rect(0,max(0,y_top-xheight),width,xheight));
+  
+  cv::Mat roi = cv::Mat(hMat, cv::Rect(origin, cMat.size()));
+  cvtColor(cMat, cMat, CV_GRAY2RGB);
+
+  cMat.convertTo(roi, CV_8UC3, 3);
+  cMat.copyTo(roi);
+  cvtColor(cMat, cMat, CV_RGB2HSV);  
+  uchar* px = NULL;
+  for(int y = 0; y < xheight; y++) {
+    for(int x = max(0,(maxlbubble+lEdgeOffset[xheight-y]-lBubbleExtent[xheight-y]));	x < min(width+maxlbubble+maxrbubble,(maxlbubble+width-rEdgeOffset[xheight-y]+rBubbleExtent[xheight-y])); x++) {
+      px = hMat.ptr<uchar>(y,x);      
+      if(px[0]+px[1]+px[2] == 0) {
+	px[0] = (int)(((int)letterChar-97)*9.5);
+	px[1] = 180;
+	px[2] = 230;
+      }
+    }
+  }
+  
+  //  cv::namedWindow("Display", CV_WINDOW_AUTOSIZE); 
+  //  cv::imshow("Display", hMat);
+  std::stringstream filename_builder;
+  filename_builder << "bubble_" << letterChar << ".png";
+  cout << letterChar << ": " << width << endl;
+  cv::imwrite(filename_builder.str(), hMat);
+  //  cv::waitKey(0);
+  
+}

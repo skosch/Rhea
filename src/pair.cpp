@@ -164,3 +164,22 @@ void Pair::findPairFeatures(vector<vector<int>> *matrix, int combno) {
 
 }
 
+void Pair::fillBubbleMatrix(vector<vector<vector<int>>> *bubblematrix, vector<vector<int>> *distancematrix, int combno) {
+
+    int lLno = ((int)lL->getLetterChar())-97;
+    int rLno = ((int)rL->getLetterChar())-97; // find alphabet # from ascii
+    
+    for(int y = 0; y < lL->xheight; y++) {
+      bubblematrix->at(y)[combno][lLno*2+1] = 1; // lL but right bubble edge
+      bubblematrix->at(y)[combno][rLno*2] = 1;
+      distancematrix->at(y)[combno] = lL->rEdgeOffset[y] + spacing + rL->lEdgeOffset[y];
+    }
+
+    // go through all y-coordinates
+    // for each, add up edgepixels + spacing to get total distance
+    // bubblematrix->at(y)[combno][rLno] = 1
+    // bubblematrix->at(y)[combno][rRno] = 1
+    // distancematrix->at(y)[combno] = totaldistance
+
+
+  }

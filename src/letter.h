@@ -33,6 +33,10 @@ class Letter {
   int getYbottom() {return this->y_bottom;}
   int getWidth() {return this->width;}
  
+  void setBubble(int y, int extent, bool leftside);
+
+  void showBubbledLetter();
+
   void printLetterInfo();
   void analyze();
 
@@ -44,6 +48,8 @@ class Letter {
   std::vector<point> blackpixels;
   std::vector<int> rEdgeOffset;
   std::vector<int> lEdgeOffset;
+  std::vector<int> lBubbleExtent;
+  std::vector<int> rBubbleExtent;
 
   int lStemOffset = 0; // number of pixels from edge to stem center
   int rStemOffset = 0;
