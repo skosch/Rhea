@@ -4,7 +4,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include <array>
+#include <tr1/array>
 
 #include "rhea_config.h"
 #include "config.h"
