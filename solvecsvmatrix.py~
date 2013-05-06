@@ -1,0 +1,8 @@
+import numpy as np
+import numpy.linalg as npl
+
+A = np.loadtxt(open("rhea/bin/out_itrr.csv","rb"),delimiter=",")
+
+X = npl.lstsq(A, np.zeros(A.shape[0]))
+
+np.plot(X)
