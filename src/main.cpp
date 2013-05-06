@@ -4,9 +4,13 @@
 #include <fstream>
 #include <string>
 #include <vector>
+<<<<<<< HEAD
 #include <array>
 #include <cstdlib> // for rand()
 #include <ctime> // for time()
+=======
+#include <tr1/array>
+>>>>>>> 701459771fe1c31d59ebbac6d1106b4c72b6d5b6
 
 #include "rhea_config.h"
 #include "config.h"

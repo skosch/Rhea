@@ -1,5 +1,0 @@
-
-include_directories(${RHEA_SOURCE_DIR}/src)
-add_executable(rhea main.cpp letter.cpp config.cpp FT.cpp)
-
-target_link_libraries(rhea m opencv_core opencv_imgproc opencv_highgui opencv_ml opencv_video opencv_contrib opencv_legacy opencv_flann) 
