@@ -2,20 +2,14 @@
 #ifndef LETTER_H
 #define LETTER_H
 
-#include "core/core.hpp"
-#include "highgui/highgui.hpp"
-#include "imgproc/imgproc.hpp"
-#include "objdetect/objdetect.hpp"
-#include "boost/gil/gil_all.hpp"
-#include <ft2build.h>
-#include <freetype/ftbitmap.h>
-#include FT_FREETYPE_H
-
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
+#include <cmath>
+#include <cstdlib>
 
+using namespace std;
 typedef struct {
   int x;
   int y; // position upwards from baseline
@@ -25,7 +19,7 @@ class Letter {
 
  public:
   Letter();
-  Letter(char letterChar, FT_Bitmap* rawArray, int height, int y_baseline, int width, int xheight, int capheight);
+  Letter(char letterChar, vector<bool> rawArray, int height, int y_baseline, int width, int xheight, int capheight);
   ~Letter();
   char getLetterChar() {return this->letterChar;}
   int getHeight() {return this->height;}
@@ -33,35 +27,23 @@ class Letter {
   int getYbottom() {return this->y_bottom;}
   int getWidth() {return this->width;}
  
-  void setBubble(int y, int extent, bool leftside);
-
-  void showBubbledLetter();
-
   void printLetterInfo();
-  void analyze();
-  void findLetterFeatures(std::vector<std::vector<int>> *matrix, int combno);
 
   void f_rlEdges();
-  void f_houghstems();
-  void f_moments();
   
   int getPixel(int y, int x);
   int getPixelFromBaseline(int y, int x);
 
-  unsigned char* pixels;
+  vector<bool> pixels;
   std::vector<point> blackpixels;
   std::vector<int> rEdgeOffset;
   std::vector<int> lEdgeOffset;
-  std::vector<int> lBubbleExtent;
-  std::vector<int> rBubbleExtent;
   
   std::vector<std::vector<int>> b_on_angle; // blackness counts from pixels
   void fill_b_on_angle();
   
   int lStemOffset = 0; // number of pixels from edge to stem center
   int rStemOffset = 0;
-  float lStemIntensity = 0; // percentage of validty of the max
-  float rStemIntensity = 0; 
 
   int height;       // from bottom to top of glyph
   int xheight;
@@ -69,9 +51,6 @@ class Letter {
 
  private:
   char letterChar;
-
-  boost::gil::gray8c_view_t* gMat;
-  cv::Mat cMat;
 
   // dimensions:
  

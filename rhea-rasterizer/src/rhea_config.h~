@@ -1,5 +1,0 @@
-// the configured options and settings for rhea
-
-#define rhea_VERSION_MAJOR @rhea_VERSION_MAJOR@
-#define rhea_VERSION_MINOR @rhea_VERSION_MINOR@
-
