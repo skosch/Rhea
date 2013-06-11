@@ -19,8 +19,11 @@ class Pair {
   void fillPairEdgeForceMatrix(vector<vector<int>> *matrix, int combno, int
 dxsteps, int dysteps, int yavgsteps);
 
+  void fillPixelpairs(unsigned char* pixelPairs);
   Letter* getlLetter() {return lL;}
   Letter* getrLetter() {return rL;}
+  
+  int numPixelpairs;
 
  private:
   Letter* lL;

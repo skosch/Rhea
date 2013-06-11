@@ -13,6 +13,7 @@ Pair::Pair(Letter* lLetter, Letter* rLetter, int spacing) {
   this->spacing = spacing;
   lWidth = lL->getWidth();
   rWidth = rL->getWidth();
+  this->numPixelpairs = lL->numPixels * rL->numPixels;
 }
 
 void Pair::fillPairPolynomialForceMatrix(vector<vector<float>> *matrix, int combno, const int degree) {
@@ -47,13 +48,14 @@ void Pair::fillPairPolynomialForceMatrix(vector<vector<float>> *matrix, int comb
   
   for(int pl = 0; pl < lL->blackpixels.size(); pl++) {
     for(int pr = 0; pr < rL->blackpixels.size(); pr++) {
-      unsigned char* pairPtr = &pairsH[6*(pl * rL->blackpixels.size() + pr)];
+      unsigned char* pairPtr = &pairsH[7*(pl * rL->blackpixels.size() + pr)];
       pairPtr[0] = (lL->blackpixels[pl].x >> 8) & 0xff;
       pairPtr[1] = lL->blackpixels[pl].x & 0xff;
       pairPtr[2] = ((rL->blackpixels[pr].x + lL->width + spacing) >> 8) & 0xff;
       pairPtr[3] = (rL->blackpixels[pr].x + lL->width + spacing) & 0xff;
       pairPtr[4] = lL->blackpixels[pl].y & 0xff;
       pairPtr[5] = rL->blackpixels[pr].y & 0xff;
+      pairPtr[6] = (lL->brs[pl] + rL->bls[pr]) & 0xff;
     }
   }
   
@@ -85,6 +87,25 @@ void Pair::fillPairPolynomialForceMatrix(vector<vector<float>> *matrix, int comb
 
 
 }
+
+
+void Pair::fillPixelpairs(unsigned char* pixelPairs) {
+  for(int pl = 0; pl < lL->blackpixels.size(); pl++) {
+    for(int pr = 0; pr < rL->blackpixels.size(); pr++) {
+      unsigned char* pairPtr = &pixelPairs[7*(pl * rL->blackpixels.size() + pr)];
+      pairPtr[0] = (lL->blackpixels[pl].x >> 8) & 0xff;
+      pairPtr[1] = lL->blackpixels[pl].x & 0xff;
+      pairPtr[2] = ((rL->blackpixels[pr].x + lL->width + spacing) >> 8) & 0xff;
+      pairPtr[3] = (rL->blackpixels[pr].x + lL->width + spacing) & 0xff;
+      pairPtr[4] = lL->blackpixels[pl].y & 0xff;
+      pairPtr[5] = rL->blackpixels[pr].y & 0xff;
+      pairPtr[6] = (lL->brs[pl] + rL->bls[pr]) & 0xff;
+    }
+  }
+}
+
+
+
 void Pair::fillPairForceMatrix(vector<vector<int>> *matrix, int combno) {
   /* for every pixel-pixel combo between first and second letter,
    * add one to the corresponding matrix cell.

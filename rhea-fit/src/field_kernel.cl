@@ -46,10 +46,9 @@ __kernel void field_kernel( int numLetterPixels,
   int x0 = (int)( letterPixelsD[ptroffs] << 8 ) + (int)letterPixelsD[ptroffs+1];
   int y0 = (int) letterPixelsD[ptroffs+2];
   int br = (int) letterPixelsD[ptroffs+3]; // right value of the letterpixel
-  float vdx = (x1 - x0)/(float)xheight;
-  float vdy = abs(y1 - y0)/(float)xheight;
-  float vyy =  0.5*(y0 + y1)/(float)xheight;
-  float vbl = (bactual+br)/(float)xheight;
+
+
+
 
   float result = 0.0;
   const int offs1 = degree + 1;

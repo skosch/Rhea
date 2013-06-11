@@ -15,7 +15,7 @@ Letter::Letter(char letterChar, vector<bool> rawArray, int height, int y_baselin
 
   // set variables
   this->letterChar = letterChar;
-
+  this->maxb = 0;
   int br, bl;
   for(int row = 0; row < y_baseline; row++) {
     for(int x = 0; x < width; x++) {
@@ -37,6 +37,7 @@ Letter::Letter(char letterChar, vector<bool> rawArray, int height, int y_baselin
         }
         brs.push_back(br);
         bls.push_back(bl);
+        if(br+bl > maxb) maxb = br+bl;
       }
     }
   }

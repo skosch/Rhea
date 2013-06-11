@@ -38,6 +38,7 @@ void createLetterPixels(unsigned char* letterPixels);
   vector<bool> pixels;
   std::vector<point> blackpixels;
   std::vector<int> bls, brs;
+  int maxb;
   std::vector<int> rEdgeOffset;
   std::vector<int> lEdgeOffset;
 

@@ -1,6 +1,9 @@
+#ifndef CSVROW_H
+#define CSVROW_H
+
 /****************** CSV HANDLING ********************/
 
-class CVSRow
+class CSVRow
 {
   public:
     std::string const& operator[](std::size_t index) const
@@ -25,11 +28,18 @@ class CVSRow
         m_data.push_back(cell);
       }
     }
+   /* std::istream& operator<<(std::istream& str) {
+      readNextRow(str);
+      return str;
+    } */
   private:
     std::vector<std::string>    m_data;
 };
-std::istream& operator>>(std::istream& str,CVSRow& data)
+inline std::istream& operator<<(CSVRow& data, std::istream& str)
 {
   data.readNextRow(str);
   return str;
-}
+} 
+
+
+#endif

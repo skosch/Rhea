@@ -1,7 +1,8 @@
 /* THIS CODE IS ADAPTED FROM DR. DOBBS
  * GENTLE INTRODUCTION TO OPENCL.
  */
-
+#ifndef OPENCLFUNCS_H
+#define OPENCLFUNCS_H
 
 #include <math.h>
 #include <stdio.h>
@@ -17,7 +18,7 @@
 
 
 /* Find a GPU or CPU associated with the first available platform */
-cl_device_id create_device() {
+inline cl_device_id create_device() {
 
    cl_platform_id platform;
    cl_device_id dev;
@@ -44,7 +45,7 @@ cl_device_id create_device() {
 }
 
 /* Create program from a file and compile it */
-cl_program build_program(cl_context ctx, cl_device_id dev, const char* filename) {
+inline cl_program build_program(cl_context ctx, cl_device_id dev, const char* filename) {
 
    cl_program program;
    FILE *program_handle;
@@ -94,3 +95,5 @@ cl_program build_program(cl_context ctx, cl_device_id dev, const char* filename)
 
    return program;
 }
+
+#endif
