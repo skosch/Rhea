@@ -11,12 +11,5 @@ For Ubuntu:
 sudo apt-get install libopencv-core-dev libopencv-highgui-dev libopencv-objdetect-dev liblpsolve55-dev libopencv-ml-dev
 ```
 
-Hi there.
-
-Thanks for your interest in Rhea. You can find more info on my homepage, aldusleaf.org.
-
-Cheers,
-
-Seb
-
+Don't even think about trying to make sense of this thing. It's 2017; better start over in Python instead.
 
